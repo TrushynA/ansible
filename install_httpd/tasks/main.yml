@@ -1,2 +1,35 @@
 ---
 # tasks file for install_httpd
+ - name: Check version Linux
+   debug: var=ansible_os_family
+     
+ - block:
+        
+     - name: Install Apache web Server Debian
+       apt: name=apache2 update_cache=yes state=latest
+                       
+     - name: Start Debian
+       service: name=apache2 state=started enabled=yes
+       when: ansible_os_family== "Debian"
+                                              
+   when: ansible_os_family == "Debian"
+                                                   
+ - block:
+                                                      
+     - name: Install Apache web Server CentOS
+       yum: name=httpd update_cache=yes state=latest
+                                                                     
+     - name: Start CentOS
+       service: name=httpd state=started enabled=yes
+       when: ansible_os_family== "RedHat"
+                                                                                            
+   when: ansible_os_family == "RedHat"
+                                                                                                 
+ - name: Copy files in www CentOS&Debian
+# ИСПРАВЛЯЕМ: src={{ source_folder }}/{{ item }} меняем на src={{ item }}
+   copy: src={{ item }} dest={{ destin_folder }} mode=0555
+   loop:
+     - "index.html"
+   notify:
+     - Restart Apache RedHat
+     - Restart Apache Debian
