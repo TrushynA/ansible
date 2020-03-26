@@ -26,7 +26,7 @@
    when: ansible_os_family == "RedHat"
                                                                                                  
  - name: Copy files in www CentOS&Debian
-# ИСПРАВЛЯЕМ: src={{ source_folder }}/{{ item }} меняем на src={{ item }}
+#  ИСПРАВЛЯЕМ: src={{ source_folder }}/{{ item }} меняем на src={{ item }}
    copy: src={{ item }} dest={{ destin_folder }} mode=0555
    loop:
      - "index.html"
