@@ -1,0 +1,54 @@
+#!groovy
+//Check properties
+properties([disableConcurrentBuilds()])
+
+pipeline {
+        agent {
+                label 'centos'
+        }
+        options {
+                buildDiscarder(logRotator(numToKeepStr: '4', artifactNumToKeepStr: '4'))
+                //timestamps()
+        }
+        stages {
+                stage("create docker image"){
+                        steps{
+                                echo "============= start building image ============"
+				dir('docker'){
+						sh 'docker build -t diplom.practice:test .'
+					}
+                                }
+                }
+		stage("List docker image"){
+                       steps{
+                                sh 'docker images'
+				}
+                }
+		stage("Run docker container"){
+                       steps{
+				sh 'docker run -d -p 8080:8080 diplom.practice:test'
+                                }
+                }
+		 stage("Delete running container"){
+                       steps{
+		       		sh 'docker stop $(docker ps -a -q)'
+                                sh 'docker rm $(docker ps -a -q)'
+                                }
+                }
+		stage("Push container to dockerregistry"){
+                       steps{
+                                sh 'docker tag diplom.practice:test 1ntegral/diplom.practise:test'
+                                sh 'docker push 1ntegral/diplom.practise:test'
+                                }
+                }
+		 stage("Clean Slave node"){
+                       steps{
+                                sh 'docker rmi $(docker images -q) -f'
+				sh 'docker images'
+                                }
+                }
+
+        }
+}
+
+
