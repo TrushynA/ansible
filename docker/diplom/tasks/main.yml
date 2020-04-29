@@ -15,7 +15,7 @@
    when: ansible_os_family == "Debian"
                                                    
  - block:
-                                                      
+                                                          
      - name: Install Apache web Server CentOS
        yum: name=httpd update_cache=yes state=latest
                                                                      
