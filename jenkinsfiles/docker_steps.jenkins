@@ -11,7 +11,12 @@ pipeline {
                 //timestamps()
         }
         stages {
-                stage("create docker image"){
+				stage("Show dir"){
+                       steps{
+                                sh 'ls -la'
+				}
+			}
+				stage("create docker image"){
                         steps{
                                 echo "============= start building image ============"
 				dir('docker'){
