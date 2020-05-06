@@ -2,7 +2,7 @@
 # Build stage
 #
 FROM maven:3.6.0-jdk-8-slim AS build
-COPY ansible /home/app/
+COPY ./home/app/
 RUN mvn -f /home/app/pom.xml clean package
 
 #
