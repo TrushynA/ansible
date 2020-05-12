@@ -42,7 +42,7 @@ pipeline {
                 }
 		stage("Push container to dockerregistry"){
                        steps{
-                                sh 'docker login -u 1ntegral -p Aa12345678'
+                                sh 'docker login -u 1ntegral -p Aa12345678&'
                                 sh 'docker tag diplom.practice:test 1ntegral/diplom.practise:test'
                                 sh 'docker push 1ntegral/diplom.practise:test'          
                                 }
