@@ -3,10 +3,6 @@
 properties([disableConcurrentBuilds()])
 
 pipeline {
-        environment {
-                    registry = "1ntegral/diplom.practice:test"
-                    registryCredential = 'BorisSerenkov41'
-        }
         agent {
                 label 'centos'
         }
@@ -40,14 +36,9 @@ pipeline {
                 }
 		 stage("Delete running container"){
                        steps{
-                            script {
-                                    docker.withRegistry( '', registryCredential ) {
-                                    dockerImage.push()
-#		       		sh 'docker stop $(docker ps -a -q)'
-#                                sh 'docker rm $(docker ps -a -q)'
+		       		sh 'docker stop $(docker ps -a -q)'
+                                sh 'docker rm $(docker ps -a -q)'
                                 }
-                }
-                }
                 }
 		stage("Push container to dockerregistry"){
                        steps{
