@@ -3,6 +3,10 @@
 properties([disableConcurrentBuilds()])
 
 pipeline {
+        environment {
+                    registry = "1ntegral/diplom.practice"
+                    registryCredential = 'BorisSerenkov41'
+        }
         agent {
                 label 'centos'
         }
@@ -42,8 +46,10 @@ pipeline {
                 }
 		stage("Push container to dockerregistry"){
                        steps{
-                                sh 'docker tag diplom.practice:test 1ntegral/diplom.practise:test'
-                                sh 'docker push 1ntegral/diplom.practise:test'
+                       script {
+                                docker.build registry + ":$BUILD_NUMBER"
+#                                sh 'docker tag diplom.practice:test 1ntegral/diplom.practise:test'
+ #                               sh 'docker push 1ntegral/diplom.practise:test'
                                 }
                 }
 		 stage("Clean Slave node"){
