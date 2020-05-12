@@ -48,9 +48,8 @@ pipeline {
                        steps{
                        script {
                                 docker.build registry + ":$BUILD_NUMBER"
-#                                sh 'docker tag diplom.practice:test 1ntegral/diplom.practise:test'
- #                               sh 'docker push 1ntegral/diplom.practise:test'
                                 }
+                }
                 }
 		 stage("Clean Slave node"){
                        steps{
